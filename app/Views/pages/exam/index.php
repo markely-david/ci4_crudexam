@@ -1,6 +1,19 @@
 <?= $this->extend('layouts/main'); ?>
 <?= $this->section('content'); ?>
 <div class="container-fluid">
+    <?php if(session()->getFlashdata('success')): ?>
+    <div class="alert alert-success alert-dismissible fade show">
+        <?= session()->getFlashdata('success') ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    <?php endif; ?>
+    <?php if(session()->getFlashdata('error')): ?>
+    <div class="alert alert-danger alert-dismissible fade show">
+        <?= session()->getFlashdata('error') ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    <?php endif; ?>
+    
     <div class="d-flex justify-content-between align-items-center mb-3">
         <div>
             <h2 class="m-0">Exam Records</h2>
@@ -45,6 +58,11 @@
                 </tbody>
             </table>
         </div>
+        <?php if(isset($pager)): ?>
+        <div class="card-footer">
+            <?= $pager->links() ?>
+        </div>
+        <?php endif; ?>
     </div>
 </div>
 <?= $this->endSection(); ?>

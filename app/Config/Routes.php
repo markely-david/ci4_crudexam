@@ -45,6 +45,9 @@ $routes->get('menu','Menu::index');
 // Student Routes
 $routes->get('students', 'Student::index');
 $routes->post('student/store', 'Student::store');
+$routes->get('student/show/(:num)', 'Student::show/$1');
+$routes->get('student/edit/(:num)', 'Student::edit/$1');
+$routes->post('student/update/(:num)', 'Student::update/$1');
 $routes->delete('student/delete/(:num)', 'Student::delete/$1');
 
 // Exam module routes
