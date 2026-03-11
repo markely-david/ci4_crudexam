@@ -106,19 +106,19 @@ class ApplicationModel extends Model
     {
         if ($username) {
             return $this->db->table('users')
-                ->select('*,users.id AS userID,user_role.id AS role_id')
+                ->select('users.*, user_role.role_name AS role, users.id AS userID, user_role.id AS role_id')
                 ->join('user_role', 'users.role = user_role.id')
                 ->where(['username' => $username])
                 ->get()->getRowArray();
         } elseif ($userID) {
             return $this->db->table('users')
-                ->select('*,users.id AS userID,user_role.id AS role_id')
+                ->select('users.*, user_role.role_name AS role, users.id AS userID, user_role.id AS role_id')
                 ->join('user_role', 'users.role = user_role.id')
                 ->where(['users.id' => $userID])
                 ->get()->getRowArray();
         } else {
             return $this->db->table('users')
-                ->select('*,users.id AS userID,user_role.id AS role_id')
+                ->select('users.*, user_role.role_name AS role, users.id AS userID, user_role.id AS role_id')
                 ->join('user_role', 'users.role = user_role.id')
                 ->get()->getResultArray();
         }

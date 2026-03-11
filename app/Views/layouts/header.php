@@ -9,6 +9,7 @@
             <li class="nav-item d-none d-md-block"><a href="#" class="nav-link">Home</a></li>
             <li class="nav-item d-none d-md-block"><a href="#" class="nav-link">Contact</a></li>
             <li class="nav-item d-none d-md-block"><a href="<?= base_url('students') ?>" class="nav-link">Students</a></li>
+            <li class="nav-item d-none d-md-block"><a href="<?= base_url('profile') ?>" class="nav-link">Profile</a></li>
         </ul>
         <ul class="navbar-nav ms-auto">
             <li class="nav-item">
@@ -24,12 +25,20 @@
             </li>
             <li class="nav-item dropdown user-menu">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                    <img src="<?= base_url('assets/images/avatar4.png') ?>" class="user-image rounded-circle shadow" alt="User Image" />
+                    <?php if (!empty($user['profile_image'])): ?>
+                        <img src="<?= base_url('uploads/profiles/' . esc($user['profile_image'])) ?>" class="user-image rounded-circle shadow" alt="User Image" />
+                    <?php else: ?>
+                        <img src="<?= base_url('assets/images/avatar4.png') ?>" class="user-image rounded-circle shadow" alt="User Image" />
+                    <?php endif; ?>
                     <span class="d-none d-md-inline"><?= $user['fullname'] ?? 'User' ?></span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
                     <li class="user-header text-bg-primary">
-                        <img src="<?= base_url('assets/images/avatar4.png') ?>" class="rounded-circle shadow" alt="User Image" />
+                        <?php if (!empty($user['profile_image'])): ?>
+                            <img src="<?= base_url('uploads/profiles/' . esc($user['profile_image'])) ?>" class="rounded-circle shadow" alt="User Image" />
+                        <?php else: ?>
+                            <img src="<?= base_url('assets/images/avatar4.png') ?>" class="rounded-circle shadow" alt="User Image" />
+                        <?php endif; ?>
                         <p><?= $user['fullname'] ?? 'User' ?> - <?= $user['role'] ?? 'Member' ?><small>Member since Nov. 2023</small></p>
                     </li>
                     <li class="user-body">
@@ -40,7 +49,7 @@
                         </div>
                     </li>
                     <li class="user-footer">
-                        <a href="#" class="btn btn-default btn-flat">Profile</a>
+                        <a href="<?= base_url('profile') ?>" class="btn btn-default btn-flat">Profile</a>
                         <a href="<?= base_url('logout') ?>" class="btn btn-default btn-flat float-end">Sign out</a>
                     </li>
                 </ul>

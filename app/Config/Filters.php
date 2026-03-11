@@ -74,7 +74,7 @@ class Filters extends BaseFilters
     public array $globals = [
         'before' => [
             'isLoggedIn' => ['except' => ['/', 'register', 'login']],
-            'isGranted'  => ['except' => ['/', 'register', 'login', 'logout', 'blocked', 'dashboard', 'dashboard-v2', 'dashboard-v3', 'students', 'student/*', 'exam', 'exam/*']],
+            'isGranted'  => ['except' => ['/', 'register', 'login', 'logout', 'blocked', 'dashboard', 'dashboard-v2', 'dashboard-v3', 'students', 'student/*', 'exam', 'exam/*', 'profile', 'profile/*']],
             // 'honeypot',
             // 'csrf',
             // 'invalidchars',

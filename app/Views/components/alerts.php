@@ -39,11 +39,24 @@
         </div>
     </div>
 <?php endif ?>
-<?php if (session()->getFlashdata('notif_error')) : ?>
+<?php if (session()->getFlashdata('notif_error') || session()->getFlashdata('error')) : ?>
     <div class="alert alert-danger alert-dismissible" role="alert">
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         <div class="alert-message">
             <?= session()->getFlashdata('notif_error') ?: session()->getFlashdata('error'); ?>
+        </div>
+    </div>
+<?php endif ?>
+<?php if (session()->getFlashdata('errors')) : ?>
+    <div class="alert alert-danger alert-dismissible" role="alert">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <div class="alert-message">
+            <strong>Validation Errors:</strong>
+            <ul class="mb-0">
+                <?php foreach (session()->getFlashdata('errors') as $error) : ?>
+                    <li><?= esc($error) ?></li>
+                <?php endforeach; ?>
+            </ul>
         </div>
     </div>
 <?php endif ?>

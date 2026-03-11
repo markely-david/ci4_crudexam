@@ -13,6 +13,11 @@ $routes->get('blocked', 'Auth::forbiddenPage');
 $routes->get('register', 'Auth::register');
 $routes->post('register', 'Auth::registration');
 
+// Profile Routes
+$routes->get('/profile', 'ProfileController::show');
+$routes->get('/profile/edit', 'ProfileController::edit');
+$routes->post('/profile/update', 'ProfileController::update');
+
 $routes->get('dashboard', 'Home::index');
 $routes->get('dashboard-v2', 'Home::dashboardV2');
 $routes->get('dashboard-v3', 'Home::dashboardV3');
