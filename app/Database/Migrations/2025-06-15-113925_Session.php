@@ -26,7 +26,7 @@ class Session extends Migration
         ]);
         $this->forge->addKey('id', true);
         $this->forge->addKey('timestamp', true);
-        $this->forge->createTable('sessions');
+        $this->forge->createTable('sessions', true);
     }
 
     public function down()

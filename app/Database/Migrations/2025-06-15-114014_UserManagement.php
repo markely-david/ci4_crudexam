@@ -8,8 +8,6 @@ class UserManagement extends Migration
 {
     public function up()
     {
-        $this->forge->createDatabase('starterpanel', true);
-
         // Create menu categories table
         $this->forge->addField([
             'id'          => [
@@ -25,7 +23,7 @@ class UserManagement extends Migration
 
         ]);
         $this->forge->addKey('id', true);
-        $this->forge->createTable('user_menu_category');
+        $this->forge->createTable('user_menu_category', true);
 
         // Create user menu table
         $this->forge->addField([
@@ -58,7 +56,7 @@ class UserManagement extends Migration
 
         ]);
         $this->forge->addKey('id', true);
-        $this->forge->createTable('user_menu');
+        $this->forge->createTable('user_menu', true);
 
         // Create user submenu table
         $this->forge->addField([
@@ -84,7 +82,7 @@ class UserManagement extends Migration
 
         ]);
         $this->forge->addKey('id', true);
-        $this->forge->createTable('user_submenu');
+        $this->forge->createTable('user_submenu', true);
 
         // Create user role table
         $this->forge->addField([
@@ -101,7 +99,7 @@ class UserManagement extends Migration
 
         ]);
         $this->forge->addKey('id', true);
-        $this->forge->createTable('user_role');
+        $this->forge->createTable('user_role', true);
 
         // Create users table              
         $this->forge->addField([
@@ -136,7 +134,7 @@ class UserManagement extends Migration
             ],
         ]);
         $this->forge->addKey('id', true);
-        $this->forge->createTable('users');
+        $this->forge->createTable('users', true);
 
         // Create user access table
         $this->forge->addField([
@@ -169,7 +167,7 @@ class UserManagement extends Migration
 
         ]);
         $this->forge->addKey('id', true);
-        $this->forge->createTable('user_access');
+        $this->forge->createTable('user_access', true);
     }
 
     public function down()

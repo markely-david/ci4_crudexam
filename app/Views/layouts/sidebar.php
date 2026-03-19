@@ -1,82 +1,76 @@
-<aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
-    <div class="sidebar-brand">
-        <a href="<?= base_url() ?>" class="brand-link">
-            <img src="<?= base_url('assets/img/AdminLTELogo.png') ?>" alt="AdminLTE Logo" class="brand-image opacity-75 shadow" />
-            <span class="brand-text fw-light">Jurado</span>
+<?php
+$role       = session('user')['role'] ?? 'guest';
+$fullname   = session('user')['fullname'] ?? 'User';
+$segment    = service('uri')->getSegment(1);
+$subsegment = service('uri')->getSegment(2);
+$initial    = strtoupper(substr($fullname, 0, 1));
+?>
+<aside class="sidebar-wrapper">
+    <a href="<?= base_url() ?>" class="sidebar-logo text-decoration-none">
+        <div class="logo-icon"><i class="bi bi-grid-fill"></i></div>
+        <div class="logo-text">
+            <span class="name">AdminPanel</span>
+            <span class="tagline">Management System</span>
+        </div>
+    </a>
+
+    <nav class="sidebar-nav">
+        <?php if ($role === 'admin'): ?>
+            <div class="nav-group-title">Overview</div>
+            <a href="<?= base_url('dashboard') ?>" class="nav-item-link <?= $segment === 'dashboard' ? 'active' : '' ?>">
+                <i class="bi bi-speedometer2"></i> Dashboard
+            </a>
+            <a href="<?= base_url('students') ?>" class="nav-item-link <?= $segment === 'students' ? 'active' : '' ?>">
+                <i class="bi bi-people-fill"></i> Students
+            </a>
+
+            <div class="nav-group-title">Administration</div>
+            <a href="<?= base_url('admin/roles') ?>" class="nav-item-link <?= ($segment === 'admin' && $subsegment === 'roles') ? 'active' : '' ?>">
+                <i class="bi bi-shield-fill-check"></i> Roles
+            </a>
+            <a href="<?= base_url('admin/users') ?>" class="nav-item-link <?= ($segment === 'admin' && $subsegment === 'users') ? 'active' : '' ?>">
+                <i class="bi bi-person-gear"></i> Users
+            </a>
+
+        <?php elseif ($role === 'teacher'): ?>
+            <div class="nav-group-title">Overview</div>
+            <a href="<?= base_url('dashboard') ?>" class="nav-item-link <?= $segment === 'dashboard' ? 'active' : '' ?>">
+                <i class="bi bi-speedometer2"></i> Dashboard
+            </a>
+            <a href="<?= base_url('students') ?>" class="nav-item-link <?= $segment === 'students' ? 'active' : '' ?>">
+                <i class="bi bi-people-fill"></i> Students
+            </a>
+
+        <?php else: ?>
+            <div class="nav-group-title">Overview</div>
+            <a href="<?= base_url('student/dashboard') ?>" class="nav-item-link <?= ($segment === 'student' || $segment === 'dashboard') ? 'active' : '' ?>">
+                <i class="bi bi-house-fill"></i> Dashboard
+            </a>
+
+            <div class="nav-group-title">My Account</div>
+            <a href="<?= base_url('profile') ?>" class="nav-item-link <?= ($segment === 'profile' && empty($subsegment)) ? 'active' : '' ?>">
+                <i class="bi bi-person-circle"></i> My Profile
+            </a>
+            <a href="<?= base_url('profile/edit') ?>" class="nav-item-link <?= ($segment === 'profile' && $subsegment === 'edit') ? 'active' : '' ?>">
+                <i class="bi bi-pencil-square"></i> Edit Profile
+            </a>
+        <?php endif; ?>
+    </nav>
+
+    <div class="sidebar-footer">
+        <div class="sidebar-user">
+            <?php if (!empty(session('user')['profile_image'])): ?>
+                <img src="<?= base_url('uploads/profiles/' . esc(session('user')['profile_image'])) ?>" style="width:36px;height:36px;border-radius:50%;object-fit:cover;border:2px solid var(--gold-300);flex-shrink:0;">
+            <?php else: ?>
+                <div class="avatar"><?= $initial ?></div>
+            <?php endif; ?>
+            <div class="user-info">
+                <div class="name"><?= esc($fullname) ?></div>
+                <div class="role-badge"><?= esc($role) ?></div>
+            </div>
+        </div>
+        <a href="<?= base_url('logout') ?>" class="nav-logout">
+            <i class="bi bi-box-arrow-left"></i> Sign Out
         </a>
-    </div>
-    <div class="sidebar-wrapper">
-        <nav class="mt-2">
-            <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="navigation" aria-label="Main navigation" data-accordion="false" id="navigation">
-                <li class="nav-header">COMMON PAGES</li>
-                <li class="nav-item <?= ($segment == 'dashboard' || $segment == 'dashboard-v2' || $segment == 'dashboard-v3') ? 'menu-open' : '' ?>">
-                    <a href="#" class="nav-link <?= ($segment == 'dashboard' || $segment == 'dashboard-v2' || $segment == 'dashboard-v3') ? 'active' : '' ?>">
-                        <i class="nav-icon bi bi-speedometer"></i>
-                        <p>Dashboard<i class="nav-arrow bi bi-chevron-right"></i></p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="<?= base_url('dashboard') ?>" class="nav-link <?= ($segment == 'dashboard' && !str_contains(current_url(), 'v2') && !str_contains(current_url(), 'v3')) ? 'active' : '' ?>">
-                                <i class="nav-icon bi bi-circle"></i>
-                                <p>Dashboard v1</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="<?= base_url('dashboard-v2') ?>" class="nav-link <?= ($segment == 'dashboard-v2') ? 'active' : '' ?>">
-                                <i class="nav-icon bi bi-circle"></i>
-                                <p>Dashboard v2</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="<?= base_url('dashboard-v3') ?>" class="nav-link <?= ($segment == 'dashboard-v3') ? 'active' : '' ?>">
-                                <i class="nav-icon bi bi-circle"></i>
-                                <p>Dashboard v3</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <?php foreach ($MenuCategory as $mCategory) : ?>
-                    <?php if ($mCategory['menu_category'] != 'Common Page') : ?>
-                        <li class="nav-header"><?= $mCategory['menu_category'] ?></li>
-                    <?php endif; ?>
-                    <?php
-                    $Menu = getMenu($mCategory['menuCategoryID'], $user['role']);
-                    foreach ($Menu as $menu) :
-                        if ($menu['title'] == 'Dashboard') continue;
-                        if ($menu['parent'] == 0) :
-                    ?>
-                            <li class="nav-item">
-                                <a href="<?= base_url($menu['url']) ?>" class="nav-link <?= ($segment == $menu['url']) ? 'active' : '' ?>">
-                                    <i class="nav-icon bi bi-<?= $menu['icon'] ?>"></i>
-                                    <p><?= $menu['title'] ?></p>
-                                </a>
-                            </li>
-                        <?php
-                        else :
-                            $SubMenu = getSubMenu($menu['menu_id'], $user['role']);
-                        ?>
-                            <li class="nav-item <?= ($segment == $menu['url']) ? 'menu-open' : '' ?>">
-                                <a href="#" class="nav-link <?= ($segment == $menu['url']) ? 'active' : '' ?>">
-                                    <i class="nav-icon bi bi-<?= $menu['icon'] ?>"></i>
-                                    <p><?= $menu['title'] ?><i class="nav-arrow bi bi-chevron-right"></i></p>
-                                </a>
-                                <ul class="nav nav-treeview">
-                                    <?php foreach ($SubMenu as $subMenu) : ?>
-                                        <li class="nav-item">
-                                            <a href="<?= base_url($menu['url'] . '/' . $subMenu['url']) ?>" class="nav-link <?= ($subsegment == $subMenu['url']) ? 'active' : '' ?>">
-                                                <i class="nav-icon bi bi-circle"></i>
-                                                <p><?= $subMenu['title'] ?></p>
-                                            </a>
-                                        </li>
-                                    <?php endforeach; ?>
-                                </ul>
-                            </li>
-                        <?php
-                        endif;
-                    endforeach;
-                    ?>
-                <?php endforeach; ?>
-            </ul>
-        </nav>
     </div>
 </aside>
