@@ -62,3 +62,14 @@ $routes->post('exam/store', 'Exam::store');
 $routes->get('exam/edit/(:num)', 'Exam::edit/$1');
 $routes->post('exam/update/(:num)', 'Exam::update/$1');
 $routes->delete('exam/delete/(:num)', 'Exam::delete/$1');
+
+// ── API v1 ────────────────────────────────────────────────────
+// Public: POST /api/v1/auth/token
+$routes->post('api/v1/auth/token', 'Api\AuthController::issueToken');
+
+// Protected: requires Bearer token
+$routes->group('api/v1', ['filter' => 'api_auth'], function ($routes) {
+    $routes->delete('auth/token',       'Api\AuthController::revokeToken');
+    $routes->get('students',            'Api\StudentsController::index');
+    $routes->get('students/(:num)',     'Api\StudentsController::show/$1');
+});

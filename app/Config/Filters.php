@@ -6,6 +6,7 @@ use CodeIgniter\Filters\Cors;
 use CodeIgniter\Filters\CSRF;
 use App\Filters\Authorization;
 use App\Filters\Authentication;
+use App\Filters\ApiAuthFilter;
 use CodeIgniter\Filters\Honeypot;
 use CodeIgniter\Filters\PageCache;
 use CodeIgniter\Filters\ForceHTTPS;
@@ -38,6 +39,7 @@ class Filters extends BaseFilters
         'performance'   => PerformanceMetrics::class,
         'isLoggedIn'    => Authentication::class,
         'isGranted'     => Authorization::class,
+        'api_auth'      => ApiAuthFilter::class,
     ];
 
     /**
@@ -73,8 +75,8 @@ class Filters extends BaseFilters
      */
     public array $globals = [
         'before' => [
-            'isLoggedIn' => ['except' => ['/', 'register', 'login']],
-            'isGranted'  => ['except' => ['/', 'register', 'login', 'logout', 'blocked', 'dashboard', 'dashboard-v2', 'dashboard-v3', 'students', 'student/*', 'exam', 'exam/*', 'profile', 'profile/*']],
+            'isLoggedIn' => ['except' => ['/', 'register', 'login', 'api/v1/*']],
+            'isGranted'  => ['except' => ['/', 'register', 'login', 'logout', 'blocked', 'dashboard', 'dashboard-v2', 'dashboard-v3', 'students', 'student/*', 'exam', 'exam/*', 'profile', 'profile/*', 'api/v1/*']],
             // 'honeypot',
             // 'csrf',
             // 'invalidchars',
